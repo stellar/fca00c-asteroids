@@ -1,2 +1,1 @@
-# fca00c-asteroids
-Learn Soroban and compete for a top spot on the leaderboard in Fast, Cheap &amp; Out of Control
+🚧 Landing February 15, 2023 7:00 PM EST 🚧
