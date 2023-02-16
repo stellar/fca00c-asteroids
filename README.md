@@ -141,19 +141,19 @@ been included in two formats:
    is **NOT** intended to be modified, or used in your contract. It's being
    provided only as a resource and reference to aid in understanding and
    problem-solving.
-2. As a compiled WASM binary: `contracts/soroban_asteroids_game_engine.wasm`.
-   This is the version of the contract you'll want to build and test your
-   solution with. The starter test we've provided in your `solution` directory
-   will mimic our evaluation environment as closely as possible.
+2. As a compiled WASM binary: `contracts/game_engine.wasm`. This is the version
+   of the contract you'll want to build and test your solution with. The starter
+   test we've provided in your `solution` directory will mimic our evaluation
+   environment as closely as possible.
 
-If you'd like to investigate the compiled binary, the `soroban gen` command will
-give you a pretty decent understanding. `soroban gen` is intended to `gen`erate
-client bindings for a contract. This will give you great insight into what
-functions exist in a given WASM file, and what arguments they are expecting. You
-can run the command like this:
+If you want to investigate the compiled binary, the `soroban contract bindings`
+command will give you a pretty decent understanding. `soroban contract bindings`
+is intended to generate client bindings for a contract. This will give you great
+insight into what functions exist in a given WASM file, and what arguments they
+are expecting. You can run the command like this:
 
 ```bash
-soroban gen --wasm /path/to/soroban_asteroids_game_engine.wasm --output rust
+soroban contract bindings --wasm /path/to/game_engine.wasm --output rust
 ```
 
 ### The Map
