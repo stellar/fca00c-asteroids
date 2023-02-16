@@ -246,6 +246,11 @@ cram into a starship! Your ship is capable of performing all these actions:
   - If your ship is facing in a diagonal direction, you can shoot asteroids
     within range of that direction. This can save you fuel and execution costs
     by minimizing the number of moves needed to get within range of an asteroid.
+  - You _can_ shoot asteroids sharing the same coordinates as your ship (i.e.,
+    an asteroid you're "on top of").
+  - You _can_ shoot multiple asteroids in one shot in the same direction,
+    provided they are all within range of your ship (i.e., you shoot in a
+    straight line, and any asteroids on that line will be destroyed).
 - **Harvest Fuel Pods**: The amount of fuel you begin with will not be enough to
   complete this quest. Sorry! Fuel prices are quite high at the moment. So,
   along the way, you will need to harvest fuel pods to recharge your ship.
