@@ -304,6 +304,10 @@ have the option to log in and select how your name will be displayed if you land
 on the leaderboard, and you can choose the file you wish to upload. We'll take
 care of everything else from there!
 
+> **Note:** The Soroban environment we run in our backend will limit your
+> contract invocation to 30 seconds of runtime, and `16_000_000_000` CPU cycles.
+> If your contract runs past these limits, your validation will fail.
+
 ## Useful Information
 
 ### `GameEngine` Initialization Parameters
