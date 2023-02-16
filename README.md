@@ -34,6 +34,7 @@ everything is explained in much greater detail further on down in this document.
   - [The Game Engine Contract](#the-game-engine-contract)
   - [The Map](#the-map)
   - [Controlling Your Ship](#controlling-your-ship)
+  - [Compile Your Contract](#compile-your-contract)
   - [Submit Your Ship](#submit-your-ship)
 - [Useful Information](#useful-information)
   - [`GameEngine` Initialization Parameters](#gameengine-initialization-parameters)
