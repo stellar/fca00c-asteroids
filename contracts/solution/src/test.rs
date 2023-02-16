@@ -26,7 +26,7 @@ extern crate std;
 
 /// ESPECIALLY LEAVE THIS TEST ALONE
 #[test]
-fn test_fast() {
+fn fca00c_fast() {
     // Here we install and register the GameEngine contract in a default Soroban
     // environment, and build a client that can be used to invoke the contract.
     let env = Env::default();
@@ -69,7 +69,7 @@ fn test_fast() {
 }
 
 #[test]
-pub fn test_budget() {
+pub fn fca00c_budget() {
     let env = Env::default();
     let engine_id = env.register_contract_wasm(None, GameEngineWASM);
     let engine = GameEngine::new(&env, &engine_id);

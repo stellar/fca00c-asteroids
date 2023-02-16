@@ -16,7 +16,10 @@ build-optimized:
 		done
 
 test:
-	cargo test -- --nocapture
+	cargo test fca00c_fast -- --nocapture
+
+test-budget:
+	cargo test fca00c_budget -- --nocapture
 
 clean:
 	cargo clean
