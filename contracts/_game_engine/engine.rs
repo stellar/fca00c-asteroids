@@ -98,7 +98,7 @@ impl GameEngine {
             }
         }
 
-        Ok(())
+        decrement_fuel(&e, get_shoot_fuel(&e))
     }
 
     /// Harvest a fuel pod.
@@ -117,7 +117,11 @@ impl GameEngine {
     }
 
     /// Upgrade the ship to get every fuel cost halfed.
-    pub fn p_upgrade(e: Env) {
+    pub fn p_upgrade(e: Env) -> Result<(), Error> {
+        if e.storage().has(&DataKey::Upgraded) {
+            return Err(Error::UnknownErr)
+        }
+
         let curr_shoot_fuel = get_shoot_fuel(&e);
         let curr_move_fuel = get_move_fuel(&e);
         let curr_turn_fuel = get_turn_fuel(&e);
@@ -127,11 +131,20 @@ impl GameEngine {
         set_turn_fuel(&e, curr_turn_fuel / 2);
 
         decrement_points(&e, 5);
+
+        e.storage().set(&DataKey::Upgraded, &true);
+
+        Ok(())
     }
 
     /// Get the player's position on the grid.
     pub fn p_pos(e: Env) -> Point {
         get_position(&e)
+    }
+
+    /// Get the player's current direction.
+    pub fn p_dir(e: Env) -> Direction {
+        get_direction(&e)
     }
 
     /// Get how many points the player has currently collected.

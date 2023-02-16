@@ -29,6 +29,7 @@ pub enum DataKey {
     Expired(Point),
     AstDensity,
     PodDensity,
+    Upgraded,
 }
 
 #[contracttype]
