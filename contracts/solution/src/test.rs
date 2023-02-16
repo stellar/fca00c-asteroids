@@ -26,7 +26,7 @@ extern crate std;
 
 /// ESPECIALLY LEAVE THIS TEST ALONE
 #[test]
-fn test() {
+fn test_fast() {
     // Here we install and register the GameEngine contract in a default Soroban
     // environment, and build a client that can be used to invoke the contract.
     let env = Env::default();
@@ -60,6 +60,31 @@ fn test() {
     let solution_id = env.register_contract(None, Solution);
     let solution = SolutionClient::new(&env, &solution_id);
 
+    solution.solve(&engine_id);
+
+    let points = engine.p_points();
+
+    println!("Points: {}", points);
+    assert!(points >= 100);
+}
+
+#[test]
+pub fn test_budget() {
+    let env = Env::default();
+    let engine_id = env.register_contract_wasm(None, GameEngineWASM);
+    let engine = GameEngine::new(&env, &engine_id);
+
+    engine.init(&1, &3, &8891, &16, &(50, 5, 2, 1), &1, &6, &2);
+
+    mod solution {
+        soroban_sdk::contractimport!(
+            file = "../../target/wasm32-unknown-unknown/release/soroban_asteroids_solution.wasm"
+        );
+    }
+
+    let solution_id = env.register_contract_wasm(None, solution::WASM);
+    let solution = solution::Client::new(&env, &solution_id);
+
     env.budget().reset();
 
     solution.solve(&engine_id);
@@ -72,7 +97,7 @@ fn test() {
     let points = engine.p_points();
 
     println!("Points: {}", points);
-    assert!(engine.p_points() >= 100);
+    assert!(points >= 100);
 }
 
 // WRITE ANY OF YOUR OWN TESTS BELOW
