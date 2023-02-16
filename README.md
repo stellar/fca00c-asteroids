@@ -235,11 +235,11 @@ cram into a starship! Your ship is capable of performing all these actions:
     an argument. The calculation is **always** made on the number of spaces your
     ship moves.
 - **Shoot Asteroids**: Your ship is capable of shooting asteroids to destroy
-  them and earn valuable points! Each asteroid destroyed rewards
-  you with `1 point`. Your ship's laser cannon has a range of `3 spaces`. For
-  example, if your ship is currently located at `(53, 72)`, you could shoot and
-  destroy asteroids located at `(53, 75)` or `(56, 78)`; however, an asteroid
-  located at `(57, 72)` would be out of range.
+  them and earn valuable points! For each asteroid destroyed, you will be
+  rewarded with `1 point`. Your ship's laser cannon has a range of `3 spaces`.
+  For example, if your ship is currently located at `(53, 72)`, you could shoot
+  and destroy asteroids located at `(53, 75)` or `(50, 75)`; however, an
+  asteroid located at `(49, 72)` would be out of range.
   - Use the game engine's `p_shoot()` method to shoot your laser cannon in the
     direction your ship is currently facing. Each time you fire the cannon will
     cost `5 fuel`, whether you hit an asteroid or not.
