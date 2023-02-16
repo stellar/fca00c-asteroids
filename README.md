@@ -27,7 +27,7 @@ everything is explained in much greater detail further on down in this document.
 <summary>Expand Table of Contents</summary>
 
 - [TL;DR](#tldr)
-- [Competition "Buckets" and Schedule](#competition-buckets-and-schedule)
+- [Competition Leaderboards and Schedule](#competition-leaderboards-and-schedule)
 - [Get Started with Soroban](#get-started-with-soroban)
 - [How to Play](#how-to-play)
   - [Gather Your Materials](#gather-your-materials)
@@ -45,15 +45,14 @@ everything is explained in much greater detail further on down in this document.
 
 </details>
 
-## Competition "Buckets" and Schedule
+## Competition Leaderboards and Schedule
 
 _Fast, Cheap, and 0ut 0f Control_ is a wild[,][,] experimental take on coding
 competitions. Your goal is to submit a working contract that solves a given
-problem, or performs a given task. We will refer to different "buckets" which
-are being judged. Think of these "buckets" as different leaderboards. These
-buckets are:
+problem, or performs a given task. We will track results in the following three
+(3) leaderboards.
 
-- **Fastest Submission**: In this bucket, the top prizes go to the entrants
+- **Fastest Submission**: On this leaderboard, the top prizes go to the entrants
   submitting a complete contract first, second, and so on. A good, old-fashioned
   race!
 - **Smallest WASM**: We want to test the limits of how small these deployed
@@ -63,18 +62,22 @@ buckets are:
   instructions used during a contract's invocation. Top spots are given to
   complete contracts with the least CPU utilization.
 
-Each time you submit a contract, it will be judged according to all buckets
-currently accepting entries. You _can_ submit more than once, and you _can_ earn
-prizes from each leaderboard. Specific award amounts can be found in the
-[official fca00c rules][rules].
+Each time you submit a contract, it will be judged according to all leaderboards
+currently accepting entries. Your position in each leaderboard is determined by
+your **best** submission to _that particular_ leaderboard.
+
+- **Yes!** You _can_ submit more than once. You probably should, if you want to
+  be competitive within each leaderboard.
+- **Yes!** You _can_ earn a prize from each leaderboard. Specific award amounts
+  can be found in the [official fca00c rules][rules].
 
 This round of fca00c will run according to the following schedule:
 
-| Date       | Time (EST) | Unix Timestamp | What's Happening?                                                               |
-| ---------- | ---------- | -------------- | ------------------------------------------------------------------------------- |
-| 2023-02-15 | 7:00pm     | 1676505600     | fca00c-asteroids goes live! All "buckets" are open for entries.                 |
-| 2023-02-22 | 7:00pm     | 1677110400     | Submission deadline for _Smallest WASM_ bucket.                                 |
-| 2023-03-01 | 7:00pm     | 1677715200     | Submission deadline for _Fastest Submission_ and _Lowest Resource Use_ buckets. |
+| Date       | Time (EST) | Unix Timestamp | What's Happening?                                                                    |
+| ---------- | ---------- | -------------- | ------------------------------------------------------------------------------------ |
+| 2023-02-15 | 7:00pm     | 1676505600     | fca00c-asteroids goes live! All leaderboards are open for entries.                   |
+| 2023-02-22 | 7:00pm     | 1677110400     | Submission deadline for _Smallest WASM_ leaderboard.                                 |
+| 2023-03-01 | 7:00pm     | 1677715200     | Submission deadline for _Fastest Submission_ and _Lowest Resource Use_ leaderboards. |
 
 ## Get Started with Soroban
 
@@ -419,8 +422,8 @@ compete for pure speed and get the contract written before others, you'll
 probably care much less about optimizing your contract's performance or
 execution cost. Similarly, when you're aiming for the very cheapest execution
 cost, the final deployed contract size _may_ not be a primary concern of yours.
-Your chosen strategy will need to reflect the relevant part of the competition
-"bucket" you're currently optimizing for.
+Your chosen strategy will need to reflect the relevant competition leaderboard
+you're currently optimizing for.
 
 To get you started, we are providing below some suggestions and possible
 strategies you might consider using. Take them, leave them, adapt them based on
