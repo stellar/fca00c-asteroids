@@ -12,11 +12,25 @@ fn calc(e: &Env, x: i32) -> i32 {
     let div = x / range;
     let rem = x % range;
 
-    if div > rem {
+    let mut center = if div > rem {
         (range + 1) * (div - 1) + range / 2
     } else {
         (range + 1) * (div) + range / 2
+    };
+
+    loop {
+        if center.abs() > x.abs() + (range / 2) {
+            if x > 0 {
+                center -= range + 1;
+            } else {
+                center += range + 1;
+            }
+        } else {
+            break;
+        }
     }
+
+    center
 }
 
 pub fn calc_center(e: &Env, point: Point) -> Point {

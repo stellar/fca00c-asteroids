@@ -119,7 +119,7 @@ impl GameEngine {
     /// Upgrade the ship to get every fuel cost halfed.
     pub fn p_upgrade(e: Env) -> Result<(), Error> {
         if e.storage().has(&DataKey::Upgraded) {
-            return Err(Error::UnknownErr)
+            return Err(Error::UnknownErr);
         }
 
         let curr_shoot_fuel = get_shoot_fuel(&e);
