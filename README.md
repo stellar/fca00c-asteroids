@@ -257,6 +257,33 @@ cram into a starship! Your ship is capable of performing all these actions:
   - Use the game engine's `p_upgrade()` method to upgrade your ship at any point
     during your quest. Upgrading will cost `5 points`.
 
+### Compile Your Contract
+
+When you've written a working contract, you'll need to build a binary file that
+will contain your contract's WASM byte-code. This executable file is what you
+are meant to submit as "Your Ship" on the [fca00c site][site].
+
+Compilation can be done many different ways, but we've provided a couple
+commands in our `Makefile` to get you going. `make build` will produce a binary
+compiled according to the "release" profile, while `make build-optimized` will
+work to optimize that build and minimize the size of the `.wasm` file.
+
+You can also choose from several different optimization strategies to produce an
+efficient contract binary. There is much more nuance here than we have space to
+get into fully. However, you can use the following links to get started learning
+more.
+
+- [Optimizing Builds][soroban-optimizing]: This example shows how to use the
+  `soroban-cli` to optimize a compiled contract using some sensible defaults.
+- [The `wasm_opt` crate][wasm-opt-crate]: This can be used to further customize
+  and optimize your compiled contract.
+- [The `Binaryen` toolkit][binaryen]: Binaryen is a compiler and toolchain for
+  WebAssembly. This toolkit is used "under the hood" in the `wasm_opt` crate.
+
+[soroban-optimizing]: https://soroban.stellar.org/docs/getting-started/hello-world#optimizing-builds
+[wasm-opt-crate]: https://docs.rs/wasm-opt/latest/wasm_opt/
+[binaryen]: https://github.com/WebAssembly/binaryen
+
 ### Submit Your Ship
 
 You're finished! Really!? Sweet!! You should be proud of yourself, just for
