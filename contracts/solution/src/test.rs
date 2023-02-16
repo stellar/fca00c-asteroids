@@ -60,6 +60,9 @@ fn fca00c_fast() {
     let solution_id = env.register_contract(None, Solution);
     let solution = SolutionClient::new(&env, &solution_id);
 
+    // We reset the budget so you have the best chance to not hit a TrapMemLimitExceeded or TrapCpuLimitExceeded error
+    env.budget().reset();
+
     solution.solve(&engine_id);
 
     let points = engine.p_points();
