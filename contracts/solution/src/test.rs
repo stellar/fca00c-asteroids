@@ -24,7 +24,7 @@ use crate::{
 
 extern crate std;
 
-/// ESPECIALLY LEAVE THIS TEST ALONE
+/// ESPECIALLY LEAVE THESE TESTS ALONE
 #[test]
 fn fca00c_fast() {
     // Here we install and register the GameEngine contract in a default Soroban
@@ -74,8 +74,18 @@ pub fn fca00c_budget() {
     let engine_id = env.register_contract_wasm(None, GameEngineWASM);
     let engine = GameEngine::new(&env, &engine_id);
 
+    // DON'T CHANGE THE FOLLOWING INIT() PARAMETERS
+    // Please see note in the `fca00c_fast()` function for more details.
     engine.init(&1, &3, &8891, &16, &(50, 5, 2, 1), &1, &6, &2);
 
+    // We are running this test against your *compiled* solution contract,
+    // rather than using your source code as a crate, like in `fca00c_fast()`.
+    // The advantage here is: Your final submission will be a compiled wasm, and
+    // this test will give you a better idea of what your final budget will be.
+    // The drawback here is: Compiling your contract after each change will slow
+    // you down, and make iterating more of a slog. This probably isn't the test
+    // you want to _actively_ build against, but it is useful for fine-tuning a
+    // valid contract.
     mod solution {
         soroban_sdk::contractimport!(
             file = "../../target/wasm32-unknown-unknown/release/soroban_asteroids_solution.wasm"
@@ -85,6 +95,8 @@ pub fn fca00c_budget() {
     let solution_id = env.register_contract_wasm(None, solution::WASM);
     let solution = solution::Client::new(&env, &solution_id);
 
+    // We reset the budget here so that we *only* count the budget for your
+    // contract's `solve()` function. Everything else we've done so far is free!
     env.budget().reset();
 
     solution.solve(&engine_id);
