@@ -350,10 +350,20 @@ in space and monitor the other vital information about your ship:
 ### A Note on Testing Your Contract
 
 While writing your contract, you'll likely want to incorporate some tests along
-the way. The `src/test.rs` file is certainly there for that. You'll want to keep
-our original `test()` function intact, but you can most definitely write your
-own. In fact, many people may find it _easier_ to write their initial solution
-inside a `test.rs` file before building the final compiled WASM binary.
+the way. The `src/test.rs` file is certainly there for that. We've included two
+test functions to get you started.
+
+- The `fca00c_fast()` test will test against your written contract source code,
+  and is a much quicker way to iterate throughout the build process.
+- The `fca00c_budget()` test will test against your _compiled_ WASM contract
+  binary. Of course, for this to work, you will need a compiled contract in
+  place first. You can run `make build` or `make build-optimized` (or, you can
+  do it yourself with `cargo build`, provided you know how to use it).
+
+You'll want to keep our original `fca00c_fast()` and `fca00c_budget()` functions
+intact, but you can most definitely write your own. In fact, many people may
+find it _easier_ to write their initial solution inside a `test.rs` file before
+building the final compiled WASM binary.
 
 Inside the testing environment, you can access very useful things from the `std`
 crate, such as the `println!` macro. If you want to output any data along your
