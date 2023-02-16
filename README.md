@@ -374,6 +374,7 @@ in space and monitor the other vital information about your ship:
 - `p_fuel()`: Returns the ship's current fuel level.
 - `get_map()`: Returns the current galaxy's map as `Map<Point, MapElement>`,
   where `MapElement` will be either an asteroid or fuel pod.
+- `p_dir()`: Returns the direction your ship is currently pointed toward.
 
 ### A Note on Testing Your Contract
 
