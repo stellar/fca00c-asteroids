@@ -40,7 +40,7 @@ everything is explained in much greater detail further on down in this document.
   - [`GameEngine` Initialization Parameters](#gameengine-initialization-parameters)
   - [Diagonal Turns and Moves](#diagonal-turns-and-moves)
   - [Helpful Game Engine Methods](#helpful-game-engine-methods)
-  - [A Note on Testing Your Contract](#a-note-on-testing-your-contract)
+  - [Testing Your Contract](#testing-your-contract)
 - [Suggestions and Strategies](#suggestions-and-strategies)
 
 </details>
@@ -95,8 +95,8 @@ discuss.
 - [Rustlings][rustlings]: A more interactive method for learning Rust.
 - [Soroban Quest][series-5]: Soroban Quest is an interactive course all about
   Soroban.
-  - ⚠️ Due to Soroban's current alpha nature, this course may or may not be fully
-    up-to-date, but it will provide some valuable context.
+  - ⚠️ Due to Soroban's current alpha nature, this course may or may not be
+    fully up-to-date, but it will provide some valuable context.
 - [Stellar Quest][sq-learn]: Soroban lives on top of the Stellar network.
   Writing smart contracts for Soroban doesn't _require_ an in-depth knowledge of
   Stellar, but the context can be useful.
@@ -116,23 +116,17 @@ Before you can begin writing your contract, you'll need some materials first.
 
 1. [Setup your Soroban development environment][soroban-setup] using this guide
    from the Soroban documentation.
-2. The [`stellar/fca00c-asteroids` repo][repo] is the _canonical_ source for
-   information and materials used for this challenge. You can get the game
-   engine contract from there, and the repo also serves as a "starter project"
-   you can use to kick-start your own development.
-3. You can get your hands on the "starter project" mentioned above by cloning
-   the repository, or you can download [this zipfile of the repo][zipfile] if
-   you prefer that method.
+2. Git clone the [`stellar/fca00c-asteroids` repo][repo]. This is the
+   _canonical_ source for information and materials used for this challenge.
 
-If you are reading this document anywhere besides the [fca00c site][site]
-(in a code editor, for example), you've probably already done everything
-above, so you get to skip right to the front of the line. Well done!
+If you are reading this document anywhere besides the [fca00c site][site] (in a
+code editor, for example), you've probably already done everything above, so you
+get to skip right to the front of the line. Well done!
 
 > **Note:** The competition materials may be updated, changed, etc. from time to
 > time. If you've cloned the git repository, we recommend you `git pull` often.
-> If you've downloaded the zipfile, please check in periodically for any new
-> updates. If something seems to be broken, not working as expected, etc.
-> checking for an up-to-date repo is an excellent first step.
+> If something seems to be broken, not working as expected, etc. checking for an
+> up-to-date repo is an excellent first step.
 
 ### The Game Engine Contract
 
@@ -147,7 +141,7 @@ been included in two formats:
    problem-solving.
 2. As a compiled WASM binary: `contracts/game_engine.wasm`. This is the version
    of the contract you'll want to build and test your solution with. The starter
-   test we've provided in your `solution` directory will mimic our evaluation
+   tests we've provided in the `solution` directory will mimic our evaluation
    environment as closely as possible.
 
 If you want to investigate the compiled binary, the `soroban contract bindings`
@@ -224,8 +218,8 @@ cram into a starship! Your ship is capable of performing all these actions:
     even if you turn 315°.
   - Read below for more details on [diagonal turns][diagon-alley].
 - **Move**: Your ship can move any number of spaces as long as you have enough
-  fuel to cover that cost. Each space you move costs fuel as well (twice as
-  much fuel as each turn, mind you).
+  fuel to cover that cost. Each space you move costs fuel as well (twice as much
+  fuel as each turn, mind you).
   - Use the game engine's `p_move()` method to move your ship. By default, your
     ship will move `1 space` in the direction it is facing.
   - You can (optionally) provide a number of spaces you'd like your ship to
@@ -289,7 +283,8 @@ more.
 - [The `Binaryen` toolkit][binaryen]: Binaryen is a compiler and toolchain for
   WebAssembly. This toolkit is used "under the hood" in the `wasm_opt` crate.
 
-[soroban-optimizing]: https://soroban.stellar.org/docs/getting-started/hello-world#optimizing-builds
+[soroban-optimizing]:
+    https://soroban.stellar.org/docs/getting-started/hello-world#optimizing-builds
 [wasm-opt-crate]: https://docs.rs/wasm-opt/latest/wasm_opt/
 [binaryen]: https://github.com/WebAssembly/binaryen
 
@@ -321,7 +316,7 @@ values and some brief descriptions here, as well:
 - `laser_range (3)`: The maximum distance from which your ship's laser can
   `p_shoot()` an asteroid
 - `seed (8891)`: The map's randomness is seeded with a known, consistent `u64`
-  value (this will produce the same map every time for everybody)
+  value (this ensures everyone is playing on the same map)
 - `view_range (16)`: The size of each galaxy grid
 - `fuel: ()`: Soroban functions can only accept a maximum of 10 parameters, so
   all the fuel parameters are collected here
@@ -382,21 +377,21 @@ The game engine contract provides some helper methods so you can orient yourself
 in space and monitor the other vital information about your ship:
 
 - `p_pos()`: Returns the ship's position on the map, as a set of coordinates.
-- `p_points()`: Returns the player's current score.
+- `p_dir()`: Returns the direction your ship is currently pointed in.
 - `p_fuel()`: Returns the ship's current fuel level.
+- `p_points()`: Returns the player's current score.
 - `get_map()`: Returns the current galaxy's map as `Map<Point, MapElement>`,
   where `MapElement` will be either an asteroid or fuel pod.
-- `p_dir()`: Returns the direction your ship is currently pointed toward.
 
-### A Note on Testing Your Contract
+### Testing Your Contract
 
 While writing your contract, you'll likely want to incorporate some tests along
-the way. The `src/test.rs` file is certainly there for that. We've included two
-test functions to get you started.
+the way. The `src/test.rs` file is there for that. We've included two test
+functions to get you started.
 
 - The `fca00c_fast()` test will test against your written contract source code,
   and is a much quicker way to iterate throughout the build process.
-- The `fca00c_budget()` test will test against your _compiled_ WASM contract
+- The `fca00c_budget()` test will test against a _compiled_ WASM contract
   binary. Of course, for this to work, you will need a compiled contract in
   place first. You can run `make build` or `make build-optimized` (or, you can
   do it yourself with `cargo build`, provided you know how to use it).
@@ -425,14 +420,13 @@ need it.
 ## Suggestions and Strategies
 
 There is absolutely no shortage of interesting and unique methods you could use
-to solve this problem. You already know _Fast, Cheap, and 0ut 0f Control_ can be
-competitive using many different skill sets and strategies. When trying to
-compete for pure speed and get the contract written before others, you'll
-probably care much less about optimizing your contract's performance or
-execution cost. Similarly, when you're aiming for the very cheapest execution
-cost, the final deployed contract size _may_ not be a primary concern of yours.
-Your chosen strategy will need to reflect the relevant competition leaderboard
-you're currently optimizing for.
+to solve this problem. _Fast, Cheap, and 0ut 0f Control_ is designed to allow
+for many various competitive strategies. When trying to compete for pure speed
+and get the contract written before others, you'll likely care far less about
+optimizing your contract's performance or execution cost. Similarly, when you're
+aiming for the very cheapest execution cost, the final deployed contract size
+_may_ not be a primary concern of yours. Your chosen strategy will need to
+reflect the relevant competition leaderboard you're currently optimizing for.
 
 To get you started, we are providing below some suggestions and possible
 strategies you might consider using. Take them, leave them, adapt them based on
@@ -465,13 +459,15 @@ your competitive context: The choice is yours.
 
 [,]: https://en.wikipedia.org/wiki/Fast,_Cheap_%26_Out_of_Control
 [soroban-setup]: https://soroban.stellar.org/docs/getting-started/setup
-[zipfile]: https://github.com/stellar/fca00c-asteroids/archive/refs/heads/main.zip
 [repo]: http://www.github.com/stellar/fca00c-asteroids
 [site]: https://fastcheapandoutofcontrol.com
 [diagon-alley]: #diagonal-turns-and-moves
-[logging]: https://soroban.stellar.org/docs/how-to-guides/logging#using-the-log-macro
+[logging]:
+    https://soroban.stellar.org/docs/how-to-guides/logging#using-the-log-macro
 [debugging]: https://soroban.stellar.org/docs/learn/debugging
-[single-galaxy]: https://user-images.githubusercontent.com/2024293/217354050-405451d6-e5c5-48a4-abc4-5cc2abe5b9a3.png
-[multi-galaxy]: https://user-images.githubusercontent.com/4383610/217380430-b00376fa-624f-4f9e-81ec-2fff88e63e37.png
+[single-galaxy]:
+    https://user-images.githubusercontent.com/2024293/217354050-405451d6-e5c5-48a4-abc4-5cc2abe5b9a3.png
+[multi-galaxy]:
+    https://user-images.githubusercontent.com/4383610/217380430-b00376fa-624f-4f9e-81ec-2fff88e63e37.png
 [upload-contract]: https://fastcheapandoutofcontrol.com/game/asteroids/submit
 [rules]: https://fastcheapandoutofcontrol.com/rules
