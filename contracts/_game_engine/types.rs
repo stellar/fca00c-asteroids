@@ -33,15 +33,14 @@ pub enum DataKey {
 }
 
 #[contracttype]
-#[derive(Copy, Clone, Eq, PartialEq)]
+#[derive(Clone, Eq, PartialEq)]
 pub enum MapElement {
     Asteroid,
     FuelPod,
 }
 
 #[contracttype]
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd)]
-#[repr(u32)]
+#[derive(Debug, Clone, Eq, PartialEq, Ord, PartialOrd)]
 pub enum Direction {
     Up,
     UpRight,

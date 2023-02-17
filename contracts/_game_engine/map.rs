@@ -1,11 +1,11 @@
 use crate::{
     storage::{get_range, get_seed},
-    types::{DataKey, Direction, Error, MapElement, Point},
+    types::{DataKey, Direction, MapElement, Point},
 };
 use rand::rngs::SmallRng;
 use rand::Rng;
 use rand::SeedableRng;
-use soroban_sdk::{panic_with_error, Env, Map, Vec};
+use soroban_sdk::{Env, Map, Vec};
 
 fn calc(e: &Env, x: i32) -> i32 {
     let range = get_range(e) as i32;
@@ -83,50 +83,46 @@ pub fn get_laser_collisions(
     range: i32,
 ) -> Vec<Point> {
     let mut collisions: Vec<Point> = Vec::new(e);
-    match direction as u32 {
-        0 => {
+    match direction {
+        Direction::Up => {
             for n in 0..=range {
                 collisions.push_back(Point(user_position.0, user_position.1 + n))
             }
         }
-        1 => {
+        Direction::UpRight => {
             for n in 0..=range {
                 collisions.push_back(Point(user_position.0 + n, user_position.1 + n))
             }
         }
-        2 => {
+        Direction::Right => {
             for n in 0..=range {
                 collisions.push_back(Point(user_position.0 + n, user_position.1))
             }
         }
-        3 => {
+        Direction::DownRight => {
             for n in 0..=range {
                 collisions.push_back(Point(user_position.0 + n, user_position.1 - n))
             }
         }
-        4 => {
+        Direction::Down => {
             for n in 0..=range {
                 collisions.push_back(Point(user_position.0, user_position.1 - n))
             }
         }
-        5 => {
+        Direction::DownLeft => {
             for n in 0..=range {
                 collisions.push_back(Point(user_position.0 - n, user_position.1 - n))
             }
         }
-        6 => {
+        Direction::Left => {
             for n in 0..=range {
                 collisions.push_back(Point(user_position.0 - n, user_position.1))
             }
         }
-        7 => {
+        Direction::UpLeft => {
             for n in 0..=range {
                 collisions.push_back(Point(user_position.0 - n, user_position.1 + n))
             }
-        }
-
-        _ => {
-            panic_with_error!(e, Error::UnknownErr);
         }
     };
 
