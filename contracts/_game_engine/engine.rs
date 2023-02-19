@@ -26,6 +26,10 @@ impl GameEngine {
         asteroid_density: u32,
         pod_density: u32,
     ) {
+        if e.storage().has(&DataKey::Seed) {
+            panic_with_error!(&e, Error::UnknownErr);
+        }
+
         e.storage().set(&DataKey::MoveStep, &move_step);
         e.storage().set(&DataKey::LaserRange, &laser_range);
         e.storage().set(&DataKey::Seed, &(seed + 2));
