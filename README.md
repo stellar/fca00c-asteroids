@@ -361,7 +361,7 @@ to move your ship to `(3, 2)`, here's how this can help:
 
 ```text
 # Fuel Use Without Diagonal Moves
-p_turn(Right) + p_move(3) + p_turn(Left) + p_move(2) = 1 + 6 + 1 + 4 = 12 fuel
+p_move(2) + p_turn(Right) + p_move(3) = 4 + 1 + 6 = 11 fuel
 
 # Fuel Use With Diagonal Moves
 p_turn(UpRight) + p_move(2) + p_turn(Right) + p_move(1) = 1 + 4 + 1 + 2 = 8 fuel
