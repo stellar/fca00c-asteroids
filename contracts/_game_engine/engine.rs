@@ -9,7 +9,7 @@ use crate::storage::{
 };
 use crate::types::{DataKey, Direction, Error, MapElement, Point};
 
-use soroban_sdk::{contractimpl, Env, Map};
+use soroban_sdk::{contractimpl, Env, Map, panic_with_error};
 
 pub struct GameEngine;
 #[contractimpl]
@@ -67,16 +67,15 @@ impl GameEngine {
             step = get_step(&e) as i32;
         }
 
-        let point = match direction as u32 {
-            0 => Point(player_pos.0, player_pos.1 + step),
-            1 => Point(player_pos.0 + step, player_pos.1 + step),
-            2 => Point(player_pos.0 + step, player_pos.1),
-            3 => Point(player_pos.0 + step, player_pos.1 - step),
-            4 => Point(player_pos.0, player_pos.1 - step),
-            5 => Point(player_pos.0 - step, player_pos.1 - step),
-            6 => Point(player_pos.0 - step, player_pos.1),
-            7 => Point(player_pos.0 - step, player_pos.1 + step),
-            _ => return Err(Error::UnknownErr),
+        let point = match direction {
+            Direction::Up => Point(player_pos.0, player_pos.1 + step),
+            Direction::UpRight => Point(player_pos.0 + step, player_pos.1 + step),
+            Direction::Right => Point(player_pos.0 + step, player_pos.1),
+            Direction::DownRight => Point(player_pos.0 + step, player_pos.1 - step),
+            Direction::Down => Point(player_pos.0, player_pos.1 - step),
+            Direction::DownLeft => Point(player_pos.0 - step, player_pos.1 - step),
+            Direction::Left => Point(player_pos.0 - step, player_pos.1),
+            Direction::UpLeft => Point(player_pos.0 - step, player_pos.1 + step),
         };
 
         decrement_fuel(&e, get_move_fuel(&e) * used_fuel_mul)?;

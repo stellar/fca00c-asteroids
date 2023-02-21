@@ -68,7 +68,7 @@ pub fn get_fuel(e: &Env) -> u32 {
 pub fn decrement_fuel(e: &Env, amount: u32) -> Result<(), Error> {
     let current_fuel = get_fuel(e);
 
-    if current_fuel as i32 - (amount as i32) < get_move_fuel(e) as i32 {
+    if current_fuel as i32 - (amount as i32) < 0i32 {
         return Err(Error::NotEnoughFuel);
     }
 
