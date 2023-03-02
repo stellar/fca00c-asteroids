@@ -2,18 +2,13 @@ default: test
 
 build:
 	cargo build --target wasm32-unknown-unknown --release
-	cd target/wasm32-unknown-unknown/release/ && \
-		for i in *.wasm ; do \
-			ls -l "$$i"; \
-		done
+	cd target\wasm32-unknown-unknown\release && \
+	for %%i in (*.wasm) do ( dir /q "%%i" )
 
 build-optimized:
 	cargo +nightly build --target wasm32-unknown-unknown --release -Z build-std=std,panic_abort -Z build-std-features=panic_immediate_abort
 	cd target/wasm32-unknown-unknown/release/ && \
-		for i in *.wasm ; do \
-			wasm-opt -Oz -c -mvp "$$i" -o "$$i.tmp" && mv "$$i.tmp" "$$i"; \
-			ls -l "$$i"; \
-		done
+	for %%i in (*.wasm) do ( wasm-opt -Oz -c -mvp "%%i" -o "%%i.tmp" && move "%%i.tmp" "%%i" && dir /q "%%i" )
 
 test:
 	cargo test fca00c_fast -- --nocapture
