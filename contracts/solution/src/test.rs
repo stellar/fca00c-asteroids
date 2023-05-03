@@ -60,8 +60,8 @@ fn fca00c_fast() {
     let solution_id = env.register_contract(None, Solution);
     let solution = SolutionClient::new(&env, &solution_id);
 
-    // We reset the budget so you have the best chance to not hit a TrapMemLimitExceeded or TrapCpuLimitExceeded error
-    env.budget().reset();
+    // We reset the budget to unlimited to asses the raw performance of the solution without hitting the TrapMemLimitExceeded or TrapCpuLimitExceeded error
+    env.budget().reset_unlimited();
 
     solution.solve(&engine_id);
 
@@ -100,7 +100,7 @@ pub fn fca00c_budget() {
 
     // We reset the budget here so that we *only* count the budget for your
     // contract's `solve()` function. Everything else we've done so far is free!
-    env.budget().reset();
+    env.budget().reset_unlimited();
 
     solution.solve(&engine_id);
 
