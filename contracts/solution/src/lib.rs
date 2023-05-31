@@ -1,7 +1,7 @@
 #![no_std]
 
 use engine::Client as GameEngine;
-use soroban_sdk::{contractimpl, BytesN, Env};
+use soroban_sdk::{contractimpl, Address, Env};
 
 pub struct Solution;
 
@@ -13,7 +13,7 @@ mod test;
 
 #[contractimpl]
 impl Solution {
-    pub fn solve(env: Env, engine_id: BytesN<32>) {
+    pub fn solve(env: Env, engine_id: Address) {
         let engine = GameEngine::new(&env, &engine_id);
 
         // YOUR CODE START

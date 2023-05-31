@@ -9,7 +9,7 @@ use crate::storage::{
 };
 use crate::types::{DataKey, Direction, Error, MapElement, Point};
 
-use soroban_sdk::{contractimpl, Env, Map, panic_with_error};
+use soroban_sdk::{contractimpl, panic_with_error, Env, Map};
 
 pub struct GameEngine;
 #[contractimpl]
