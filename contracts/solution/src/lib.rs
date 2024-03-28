@@ -1,8 +1,9 @@
 #![no_std]
 
 use engine::Client as GameEngine;
-use soroban_sdk::{contractimpl, Address, Env};
+use soroban_sdk::{contract, contractimpl, Address, Env};
 
+#[contract]
 pub struct Solution;
 
 mod engine {
