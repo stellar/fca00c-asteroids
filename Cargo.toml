@@ -5,8 +5,8 @@ members = [
     "contracts/solution"
 ]
 
-[workspace.dependencies.soroban-sdk]
-version = "0.8.0"
+[workspace.dependencies]
+soroban-sdk = { version = "20.5.0" }
 
 [profile.release]
 opt-level = "z"

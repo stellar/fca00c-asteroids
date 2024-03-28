@@ -9,9 +9,11 @@ use crate::storage::{
 };
 use crate::types::{DataKey, Direction, Error, MapElement, Point};
 
-use soroban_sdk::{contractimpl, panic_with_error, Env, Map};
+use soroban_sdk::{contract, contractimpl, panic_with_error, Env, Map};
 
+#[contract]
 pub struct GameEngine;
+
 #[contractimpl]
 impl GameEngine {
     /// Initialize the engine contract.
@@ -26,24 +28,36 @@ impl GameEngine {
         asteroid_density: u32,
         pod_density: u32,
     ) {
-        if e.storage().has(&DataKey::Seed) {
+        if e.storage().instance().has(&DataKey::Seed) {
             panic_with_error!(&e, Error::UnknownErr);
         }
 
-        e.storage().set(&DataKey::MoveStep, &move_step);
-        e.storage().set(&DataKey::LaserRange, &laser_range);
-        e.storage().set(&DataKey::Seed, &(seed + 2));
-        e.storage().set(&DataKey::Range, &view_range);
-        e.storage().set(&DataKey::Reward, &asteroid_reward);
-        e.storage().set(&DataKey::PlayerFuel, &fuel.0);
-        e.storage().set(&DataKey::PlayerPos, &Point(8, 8));
-        e.storage().set(&DataKey::PlayerDir, &Direction::Up);
-        e.storage().set(&DataKey::Points, &0_u32);
+        e.storage().instance().set(&DataKey::MoveStep, &move_step);
+        e.storage()
+            .instance()
+            .set(&DataKey::LaserRange, &laser_range);
+        e.storage().instance().set(&DataKey::Seed, &(seed + 2));
+        e.storage().instance().set(&DataKey::Range, &view_range);
+        e.storage()
+            .instance()
+            .set(&DataKey::Reward, &asteroid_reward);
+        e.storage().instance().set(&DataKey::PlayerFuel, &fuel.0);
+        e.storage()
+            .instance()
+            .set(&DataKey::PlayerPos, &Point(8, 8));
+        e.storage()
+            .instance()
+            .set(&DataKey::PlayerDir, &Direction::Up);
+        e.storage().instance().set(&DataKey::Points, &0_u32);
         set_shoot_fuel(&e, fuel.1);
         set_turn_fuel(&e, fuel.3);
         set_move_fuel(&e, fuel.2);
-        e.storage().set(&DataKey::AstDensity, &asteroid_density);
-        e.storage().set(&DataKey::PodDensity, &pod_density);
+        e.storage()
+            .instance()
+            .set(&DataKey::AstDensity, &asteroid_density);
+        e.storage()
+            .instance()
+            .set(&DataKey::PodDensity, &pod_density);
     }
 
     /// Turn player direction.
@@ -94,8 +108,8 @@ impl GameEngine {
         let collisions = get_laser_collisions(&e, user_position, direction, range as i32);
 
         for wrapped_collision in collisions.iter() {
-            let collision = wrapped_collision.unwrap();
-            if let Some(Ok(MapElement::Asteroid)) = map.get(collision) {
+            let collision = wrapped_collision;
+            if let Some(MapElement::Asteroid) = map.get(collision) {
                 set_expired(&e, collision, MapElement::Asteroid);
                 increment_points(&e, get_reward_amount(&e));
             }
@@ -109,7 +123,7 @@ impl GameEngine {
         let user_position = get_position(&e);
         let map = build_range_map(&e, calc_center(&e, user_position));
 
-        if let Some(Ok(el)) = map.get(user_position) {
+        if let Some(el) = map.get(user_position) {
             if el == MapElement::FuelPod {
                 set_expired(&e, user_position, MapElement::FuelPod);
                 increment_fuel(&e, 100);
@@ -121,7 +135,7 @@ impl GameEngine {
 
     /// Upgrade the ship to get every fuel cost halfed.
     pub fn p_upgrade(e: Env) -> Result<(), Error> {
-        if e.storage().has(&DataKey::Upgraded) {
+        if e.storage().instance().has(&DataKey::Upgraded) {
             return Err(Error::UnknownErr);
         }
 
@@ -135,7 +149,7 @@ impl GameEngine {
 
         decrement_points(&e, 5);
 
-        e.storage().set(&DataKey::Upgraded, &true);
+        e.storage().instance().set(&DataKey::Upgraded, &true);
 
         Ok(())
     }

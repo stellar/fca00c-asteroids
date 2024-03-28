@@ -50,8 +50,8 @@ pub fn build_range_map(e: &Env, range_center: Point) -> Map<Point, MapElement> {
     let mut rng =
         SmallRng::seed_from_u64(((range_center.0 * fixed_seed as i32) + range_center.1) as u64);
 
-    let asteroid_range_density: u32 = e.storage().get(&DataKey::AstDensity).unwrap().unwrap(); // 6 asteroids in the 16x16 galaxy grid
-    let fuel_pod_range_density: u32 = e.storage().get(&DataKey::PodDensity).unwrap().unwrap(); // 2 fuel pods in the 16x16 galaxy grid
+    let asteroid_range_density: u32 = e.storage().instance().get(&DataKey::AstDensity).unwrap(); // 6 asteroids in the 16x16 galaxy grid
+    let fuel_pod_range_density: u32 = e.storage().instance().get(&DataKey::PodDensity).unwrap(); // 2 fuel pods in the 16x16 galaxy grid
 
     let range = get_range(e) as i32;
 
@@ -59,7 +59,7 @@ pub fn build_range_map(e: &Env, range_center: Point) -> Map<Point, MapElement> {
         let g = access_rng(&mut rng, range_center, range);
         let point = Point(g.0, g.1);
 
-        if !e.storage().has(&DataKey::Expired(point)) {
+        if !e.storage().instance().has(&DataKey::Expired(point)) {
             map.set(point, MapElement::Asteroid)
         }
     }
@@ -68,7 +68,7 @@ pub fn build_range_map(e: &Env, range_center: Point) -> Map<Point, MapElement> {
         let g = access_rng(&mut rng, range_center, range);
         let point = Point(g.0, g.1);
 
-        if !e.storage().has(&DataKey::Expired(point)) {
+        if !e.storage().instance().has(&DataKey::Expired(point)) {
             map.set(point, MapElement::FuelPod)
         }
     }
