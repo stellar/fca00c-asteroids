@@ -30,7 +30,7 @@ fn fca00c_fast() {
     // Here we install and register the GameEngine contract in a default Soroban
     // environment, and build a client that can be used to invoke the contract.
     let env = Env::default();
-    let engine_id = env.register_contract_wasm(None, GameEngineWASM);
+    let engine_id = env.register(GameEngineWASM, ());
     let engine = GameEngine::new(&env, &engine_id);
 
     // DON'T CHANGE THE FOLLOWING INIT() PARAMETERS
@@ -57,11 +57,12 @@ fn fca00c_fast() {
         &2, // The number of fuel pods each galaxy will contain
     );
 
-    let solution_id = env.register_contract(None, Solution);
+    let solution_id = env.register(Solution, ());
     let solution = SolutionClient::new(&env, &solution_id);
 
     // We reset the budget to unlimited to asses the raw performance of the solution without hitting the TrapMemLimitExceeded or TrapCpuLimitExceeded error
-    env.budget().reset_unlimited();
+    env.cost_estimate().budget().reset_unlimited();
+    env.cost_estimate().disable_resource_limits();
 
     solution.solve(&engine_id);
 
@@ -74,7 +75,7 @@ fn fca00c_fast() {
 #[test]
 pub fn fca00c_budget() {
     let env = Env::default();
-    let engine_id = env.register_contract_wasm(None, GameEngineWASM);
+    let engine_id = env.register(GameEngineWASM, ());
     let engine = GameEngine::new(&env, &engine_id);
 
     // DON'T CHANGE THE FOLLOWING INIT() PARAMETERS
@@ -91,23 +92,24 @@ pub fn fca00c_budget() {
     // valid contract.
     mod solution {
         soroban_sdk::contractimport!(
-            file = "../../target/wasm32-unknown-unknown/release/soroban_asteroids_solution.wasm"
+            file = "../../target/wasm32v1-none/release/soroban_asteroids_solution.wasm"
         );
     }
 
-    let solution_id = env.register_contract_wasm(None, solution::WASM);
+    let solution_id = env.register(solution::WASM, ());
     let solution = solution::Client::new(&env, &solution_id);
 
     // We reset the budget here so that we *only* count the budget for your
     // contract's `solve()` function. Everything else we've done so far is free!
-    env.budget().reset_unlimited();
+    env.cost_estimate().budget().reset_unlimited();
+    env.cost_estimate().disable_resource_limits();
 
     solution.solve(&engine_id);
 
     // We are printing your contract's utilized budget, but there will be an
     // *expected* difference between the budget numbers you see locally and on
     // the FCA00C site. Please see above note for details.
-    env.budget().print();
+    env.cost_estimate().budget().print();
 
     let points = engine.p_points();
 
