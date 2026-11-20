@@ -1,0 +1,22 @@
+[package]
+name = "soroban-asteroids-game-engine"
+version = "0.0.0"
+license = "Apache-2.0"
+edition = "2021"
+publish = false
+
+# Source for the prebuilt `contracts/game_engine.wasm` that the solution
+# contract imports. Rebuild it with `make build-engine`.
+
+[lib]
+path = "lib.rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+soroban-sdk = { workspace = true }
+# rand 0.8's SmallRng keeps the seeded galaxy layout stable; do not bump to 0.9+
+# without checking that `seed: 8891` still produces the same map.
+rand = { version = "0.8.6", default-features = false, features = ["small_rng"] }
+
+[dev-dependencies]
+soroban-sdk = { workspace = true, features = ["testutils"] }

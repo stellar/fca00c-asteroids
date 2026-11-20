@@ -144,14 +144,14 @@ been included in two formats:
    tests we've provided in the `solution` directory will mimic our evaluation
    environment as closely as possible.
 
-If you want to investigate the compiled binary, the `soroban contract bindings`
-command will give you a pretty decent understanding. `soroban contract bindings`
+If you want to investigate the compiled binary, the `stellar contract bindings`
+command will give you a pretty decent understanding. `stellar contract bindings`
 is intended to generate client bindings for a contract. This will give you great
 insight into what functions exist in a given WASM file, and what arguments they
 are expecting. You can run the command like this:
 
 ```bash
-soroban contract bindings --wasm /path/to/game_engine.wasm --output rust
+stellar contract bindings rust --wasm /path/to/game_engine.wasm
 ```
 
 ### The Map
@@ -269,7 +269,9 @@ are meant to submit as "Your Ship" on the [fca00c site][site].
 Compilation can be done many different ways, but we've provided a couple
 commands in our `Makefile` to get you going. `make build` will produce a binary
 compiled according to the "release" profile, while `make build-optimized` will
-work to optimize that build and minimize the size of the `.wasm` file.
+work to optimize that build and minimize the size of the `.wasm` file. Contracts
+are built for the `wasm32v1-none` target (Rust 1.84+), and `make build-optimized`
+needs the [Stellar CLI][stellar-cli] installed.
 
 You can also choose from several different optimization strategies to produce an
 efficient contract binary. There is much more nuance here than we have space to
@@ -285,6 +287,7 @@ more.
 
 [soroban-optimizing]:
     https://soroban.stellar.org/docs/getting-started/hello-world#optimizing-builds
+[stellar-cli]: https://developers.stellar.org/docs/tools/cli
 [wasm-opt-crate]: https://docs.rs/wasm-opt/latest/wasm_opt/
 [binaryen]: https://github.com/WebAssembly/binaryen
 
